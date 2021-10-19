@@ -46,7 +46,7 @@ int main(void) {
   }
 
   bf_mean /= max_it;
-  printf("Bias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);
+  printf("\nBias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);
   fclose(fp);
 
   return 0;
