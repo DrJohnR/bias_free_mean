@@ -40,7 +40,8 @@ int main(void) {
  printf("Variance_1: %lf  Variance_2: %lf\n", variance1, variance2);
  printf("Stand_Dev_1: %lf  Stand_Dev_2: %lf\n\n", stand_dev1, stand_dev2);
 
- if( (mean1 - stand_dev1) <= mean2 <= (mean1 + stand_dev1) && (mean2 - stand_dev2) <= mean1 <= (mean2 + stand_dev2) ){
+ if( (mean1 - stand_dev1) <= mean2 && mean2 <= (mean1 + stand_dev1) &&
+      (mean2 - stand_dev2) <= mean1 && mean1 <= (mean2 + stand_dev2)  ){
    printf("Data is adequately thermalised.");
  }
  else{

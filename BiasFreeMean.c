@@ -14,18 +14,18 @@ fp = fopen("xnData.dat", "w"); // the data set will be exported to this file.
 
 char therm;
 float i = 0, N = 0, ND = 0, j = 0, acceptance = 0;
-double x0 = 0, x1 = 0, x = 0, y = 0, x_squared = 0;
+double x0 = 0, x1 = 0, y = 0, x_squared = 0;
 double alpha = 0, beta = 0, r = rand()/RAND_MAX, P = 0;
 
-alpha = 0.3; // 0.3
-beta = 0.6; // 0.1 -> 0.6
-x0 = 1; // 1
+alpha = 0.6; // 0.3 -> 0.8
+beta = 10; // 8 -> 16
+x0 = 0.4; // 0.2 -> 1
 
 printf("Input desired number of sweeps:\n");  // 100 000
 scanf("%f", &N);
 printf("Input desired number of discards:\n");  // 10 000
 scanf("%f", &ND);
-printf("Impose data thermalisation? (y/n)\n");
+printf("Impose data thermalisation condition? (y/n)\n");
 scanf(" %c", &therm);
 if(therm != 'y' && therm != 'n'){
   printf("Unrecognised command, type y for yes, or n for no. Terminating.");
@@ -36,17 +36,17 @@ int SampleSize = (N - ND);
 if( (int)(N - ND)%2 != 0 && therm == 'y'){
   printf("Warning:\n data set contains an odd number of elements, thermalisation using two data subsets may be less accurate.\n\n");
 }
-  
 for(i = 1; i <= SampleSize; i++) {
-  y = x0 - (2 * alpha * r) + alpha; // candidate sample value given the previous sample x0
-  P = exp( (-1 * beta) * ((y*y) - (x*x)) ); // proportional to a Gaussian distribution
 
-  if(P > 1) { // if acceptance = P(y)/P(x0) = P(y) is >1 (more probable), then candidate value is immediately accepted
+  y = x0 - (2 * alpha * r) + alpha; // candidate sample value given the previous sample x0
+  P = exp( (-1 * beta) * ((y*y) - (x0*x0)) ); // proportional to the target Gaussian distribution
+
+  if(P > 1) { // if P(y)/P(x0) = P(y) is >1 (more probable), then candidate value is immediately accepted
     x1 = y;
     j += 1; // j is an acceptance counter, increments when a new value is accepted by the algorithm.
   }
-  else { // generate r in [0,1], if acceptance = P(y) is >r then accept, else reject and return to inital sample value x0
-    r = (double) (rand()) / (RAND_MAX);
+  else { // generate r in [0,1], if P(y) is >r then accept, else reject and return to inital sample value x0
+    r = (double) rand()/RAND_MAX;
     if(P >= r) {
       x1 = y;
       j += 1;
@@ -60,8 +60,7 @@ for(i = 1; i <= SampleSize; i++) {
   fprintf(fp, "%f\n", x_squared);
   x0 = x1; // assigns the variable x0 to its new value before the loop repeats
 
-} // end for loop on line 40
-  
+}
   acceptance = j/(N - ND); // acceptance is calculated and then printed to the user, typically aim for between 0.5 and 0.8.
   printf("Acceptance = %f\n\n", acceptance);
   fclose(fp);
@@ -93,7 +92,7 @@ for(i = 0; i < (SampleSize / 2); i++) {
  fclose(fp);  // files are closed.
  fclose(fp1);
  fclose(fp2);
-  
+
 
 /*//////// (2b) Computing thermalisation statistics ////////*/
  fp1 = fopen("HalfSample1.dat", "r");
@@ -130,7 +129,8 @@ printf("Mean_1: %lf  Mean_2: %lf\n", mean1, mean2);
 printf("Variance_1: %lf  Variance_2: %lf\n", variance1, variance2);
 printf("Stand_Dev_1: %lf  Stand_Dev_2: %lf\n\n", stand_dev1, stand_dev2);
 
-if( (mean1 - stand_dev1) <= mean2 <= (mean1 + stand_dev1) && (mean2 - stand_dev2) <= mean1 <= (mean2 + stand_dev2) ){
+if( (mean1 - stand_dev1) <= mean2 && mean2 <= (mean1 + stand_dev1) &&
+     (mean2 - stand_dev2) <= mean1 && mean1 <= (mean2 + stand_dev2) ){
   printf("Data is adequately thermalised, proceeding...\n\n");
 }
 else{
@@ -156,15 +156,14 @@ if(SampleSize % bins != 0) {
   printf("Ensure that number of bins exactly divides the number of data points. Terminating.");
   return 1;
 }
-printf("Input desired number of resamples (iterations):\n");
+printf("Input desired number of resamples:\n");
 scanf("%d", &max_it);
 
 for(it = 1; it < max_it; it++) {
   boot_sum = 0, boot_mean = 0; // reinitialise before next iteration
-  
   for(b = 1; b <= bins; b++) {
     bin_sum = 0; // empties the bin before adding to it again
-    bin_no = 1 + (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
+    bin_no = 1 + (double) (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
 
     for(dat = ((bin_no - 1) * SampleSize / bins); dat < (bin_no * SampleSize / bins); dat++) {  // Loop runs over data within bin range
       fscanf(fp, "%lf", &arr[dat]);  // data set elements within bin range are read from .dat file
@@ -176,7 +175,7 @@ for(it = 1; it < max_it; it++) {
 
 boot_mean = boot_sum / SampleSize;  // computes the mean of each resample
 bf_mean += boot_mean; // sums each of the resample means
-} // end for loop on line 162
+}
 
 bf_mean /= max_it;
 printf("\nBias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);

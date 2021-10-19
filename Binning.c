@@ -22,16 +22,15 @@ int main(void) {
     printf("Ensure that number of bins exactly divides the number of data points. Terminating.");
     return 1;
   }
-  printf("Input desired number of resamples (iterations):\n");
+  printf("Input desired number of resamples:\n");
   scanf("%d", &max_it);
 
 
   for(it = 1; it < max_it; it++) {
     boot_sum = 0, boot_mean = 0; // reinitialise before next iteration
-    
     for(b = 1; b <= bins; b++) {
       bin_sum = 0; // empties the bin before adding to it again
-      bin_no = 1 + (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
+      bin_no = 1 + (double) (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
 
       for(dat = ((bin_no - 1) * SampleSize / bins); dat < (bin_no * SampleSize / bins); dat++) {  // Loop runs over data within bin range
         fscanf(fp, "%lf", &arr[dat]);  // data set elements within bin range are read from .dat file
@@ -46,7 +45,7 @@ int main(void) {
   }
 
   bf_mean /= max_it;
-  printf("\nBias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);
+  printf("Bias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);
   fclose(fp);
 
   return 0;
