@@ -36,8 +36,8 @@ int SampleSize = (N - ND);
 if( (int)(N - ND)%2 != 0 && therm == 'y'){
   printf("Warning:\n data set contains an odd number of elements, thermalisation using two data subsets may be less accurate.\n\n");
 }
+  
 for(i = 1; i <= SampleSize; i++) {
-
   y = x0 - (2 * alpha * r) + alpha; // candidate sample value given the previous sample x0
   P = exp( (-1 * beta) * ((y*y) - (x*x)) ); // proportional to a Gaussian distribution
 
@@ -60,11 +60,11 @@ for(i = 1; i <= SampleSize; i++) {
   fprintf(fp, "%f\n", x_squared);
   x0 = x1; // assigns the variable x0 to its new value before the loop repeats
 
-}
+} // end for loop on line 40
+  
   acceptance = j/(N - ND); // acceptance is calculated and then printed to the user, typically aim for between 0.5 and 0.8.
   printf("Acceptance = %f\n\n", acceptance);
   fclose(fp);
-
   /*///////////////////////////////////////////////////////*/
 
 
@@ -93,6 +93,7 @@ for(i = 0; i < (SampleSize / 2); i++) {
  fclose(fp);  // files are closed.
  fclose(fp1);
  fclose(fp2);
+  
 
 /*//////// (2b) Computing thermalisation statistics ////////*/
  fp1 = fopen("HalfSample1.dat", "r");
@@ -170,11 +171,11 @@ for(it = 1; it < max_it; it++) {
     } // end of bin range
 
   boot_sum += bin_sum; // total sum of the bin contributes to the boot_sum
-} // loop runs until requested number of bin sums have been added to boot_sum
+  } // loop runs until requested number of bin sums have been added to boot_sum
 
 boot_mean = boot_sum / SampleSize;  // computes the mean of each resample
 bf_mean += boot_mean; // sums each of the resample means
-}
+} // end for loop on line 162
 
 bf_mean /= max_it;
 printf("Bias-free mean of data sample after %d resamples using %d bins is %f\n", max_it, bins, bf_mean);
@@ -183,4 +184,3 @@ fclose(fp);
 
 return 0;
 } // end of main()
-/*///////////////////////////////////////////////////////*/
