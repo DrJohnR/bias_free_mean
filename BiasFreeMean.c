@@ -161,6 +161,7 @@ scanf("%d", &max_it);
 
 for(it = 1; it < max_it; it++) {
   boot_sum = 0, boot_mean = 0; // reinitialise before next iteration
+  
   for(b = 1; b <= bins; b++) {
     bin_sum = 0; // empties the bin before adding to it again
     bin_no = 1 + (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
