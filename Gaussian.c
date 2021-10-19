@@ -5,19 +5,19 @@
 int main(void){
 
   FILE *fp;
-  fp = fopen("xnData.dat", "w"); // Opens a file into which data will be written.
+  fp = fopen("xnData.dat", "w"); // opens a file into which data will be written.
 
   //srand(0);
   long time();
   srand(time(0));
 
   float i = 0, N = 0, ND = 0, j = 0, acceptance = 0;
-  double x0 = 0, x1 = 0, x = 0, y = 0, x_squared = 0;
+  double x0 = 0, x1 = 0, y = 0, x_squared = 0;
   double alpha = 0, beta = 0, r = rand()/RAND_MAX, P = 0;
 
-  alpha = 0.3; // 0.3
-  beta = 0.4; // 0.1 -> 0.6
-  x0 = 1; // 1
+  alpha = 0.6; // 0.3 -> 0.8
+  beta = 10; // 8 -> 16
+  x0 = 0.4; // 0.2 -> 1
 
   printf("Input desired number of sweeps:\n");  // 100 000
   scanf("%f", &N);
@@ -28,14 +28,14 @@ int main(void){
   for(i = 1; i <= SampleSize; i++) {
 
     y = x0 - (2 * alpha * r) + alpha; // candidate sample value given the previous sample x0
-    P = exp( (-1 * beta) * ((y*y) - (x*x)) ); // proportional to a Gaussian distribution
+    P = exp( (-1 * beta) * ((y*y) - (x0*x0)) ); // proportional to the target Gaussian distribution
 
-    if(P > 1) { // if acceptance = P(y)/P(x0) = P(y) is >1 (more probable), then candidate value is immediately accepted
+    if(P > 1) { // if P(y)/P(x0) = P(y) is >1 (more probable), then candidate value is immediately accepted
       x1 = y;
       j += 1; // j is an acceptance counter, increments when a new value is accepted by the algorithm.
     }
-    else {  // generate r in [0,1], if acceptance = P(y) is >r then accept, else reject and return to inital sample value x0
-      r = (double) (rand()) / (RAND_MAX);
+    else {  // generate r in [0,1], if P(y) is >r then accept, else reject and return to inital sample value x0
+      r = (double) rand()/RAND_MAX;
       if(P >= r) {
         x1 = y;
         j += 1;
