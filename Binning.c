@@ -28,6 +28,7 @@ int main(void) {
 
   for(it = 1; it < max_it; it++) {
     boot_sum = 0, boot_mean = 0; // reinitialise before next iteration
+    
     for(b = 1; b <= bins; b++) {
       bin_sum = 0; // empties the bin before adding to it again
       bin_no = 1 + (rand()%bins);  // randomly generates an integer in [1, 2, ..., bins-1, bins]
@@ -38,7 +39,7 @@ int main(void) {
       } // end of bin range
 
     boot_sum += bin_sum; // total sum of the bin contributes to the boot_sum
-  } // loop runs until requested number of bin sums have been added to boot_sum
+    } // loop runs until requested number of bin sums have been added to boot_sum
 
   boot_mean = boot_sum / SampleSize;  // computes the mean of each resample
   bf_mean += boot_mean; // sums each of the resample means
