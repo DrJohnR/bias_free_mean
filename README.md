@@ -85,7 +85,7 @@ thermalisation condition based on three or more subsets instead.
 Separately imports the two data subsets from 'HalfSample1.dat' and 'HalfSample2.dat', and computes their thermalisation statistics (mean, variance, standard deviation). The
 complete data set is considered to be thermalised if both mean values lie within the range given by the other mean +/- its standard deviation. Explicitly:
 
-if( mean1 - stand_dev1 <= mean2 <= mean1 + stand_dev1  &&  mean2 - stand_dev2 <= mean1 <= mean2 + stand_dev2 ) { data is thermalised }
+thermalised if( mean1 - stand_dev1 <= mean2 <= mean1 + stand_dev1  &&  mean2 - stand_dev2 <= mean1 <= mean2 + stand_dev2 )
 
 Note that, strictly speaking, the acceptance value returned by 'Gaussian.c' should only be computed after the data has been confirmed as thermalised. The complete program
 'BiasFreeMean.c' instead gives the user the option to verify and impose the thermalisation condition, after a number of samples have already been discarded by an earlier prompt. 
