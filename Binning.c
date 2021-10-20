@@ -16,13 +16,13 @@ int main(void) {
   float bin_sum = 0, boot_sum = 0, boot_mean = 0, bf_mean = 0; // bf --> bias-free, boot --> bootstrap
   double arr[SampleSize];
 
-  printf("Input desired number of data bins:\n");
+  printf("Input desired number of data bins:\n"); // 200
   scanf("%d", &bins);
   if(SampleSize % bins != 0) {
     printf("Ensure that number of bins exactly divides the number of data points. Terminating.");
     return 1;
   }
-  printf("Input desired number of resamples:\n");
+  printf("Input desired number of resamples:\n"); // 50
   scanf("%d", &max_it);
 
 
