@@ -1,4 +1,4 @@
-# thermal_boot_bins
+# bias_free_mean
 Implements the Metropolis algorithm to generate a Markov chain data set which conforms to a Gaussian distribution. Statistical thermalisation is (optionally) verified, and then
 bootstrapping with binning is used to compute the bias-free mean of the data set.
 
