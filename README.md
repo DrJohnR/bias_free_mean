@@ -7,7 +7,7 @@ program is provided in (2).
 
 -------------------------------- (1) --------------------------------
 
------- Monte Carlo methods ------
+------ Monte Carlo methods ------\n
 Monte Carlo methods are a varied class of computational algorithms which may be used to obtain numerical information from certain mathematical and physical models, where the use 
 of other methods is impractical; their implementation is often most useful for systems which cannot be solved analytically. A defining feature of Monte Carlo algorithms is their 
 reliance on repeated random sampling; a given problem may be 'solved' (whereby a desired result is extracted) by generating random numbers within an appropriate domain, and
