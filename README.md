@@ -7,7 +7,9 @@ program is provided in (2).
 
 -------------------------------- (1) --------------------------------
 
------- Monte Carlo methods ------\n
+
+------ Monte Carlo methods ------
+
 Monte Carlo methods are a varied class of computational algorithms which may be used to obtain numerical information from certain mathematical and physical models, where the use 
 of other methods is impractical; their implementation is often most useful for systems which cannot be solved analytically. A defining feature of Monte Carlo algorithms is their 
 reliance on repeated random sampling; a given problem may be 'solved' (whereby a desired result is extracted) by generating random numbers within an appropriate domain, and
@@ -16,6 +18,7 @@ the number of random values generated in the process, with larger sample sizes t
 
 
 ------ Metropolis algorithm ------ 
+
 The Metropolis algorithm is one example of a Monte Carlo method whose generated output is a sequence of random samples from a desired "target" distribution T(x); this 
 discrete list (a Markov chain) will asymptotically approximate the target distribution for a sufficiently high number of samples. The algorithm is implemented by starting 
 with a "proposal" distribution P(x) which is assumed to be proportional to the desired target distribution, and an arbitrary initialisation sample x_0 taken from the 
@@ -36,6 +39,7 @@ a thermalised system.
 
 
 ------ Thermalisation ------
+
 Thermalisation is the process whereby a data set is brought to a form of "statistical equilibrium"; this means that the mean of the data set varies only within an 
 acceptable range (suitably defined by the user) as the number of resamples is changed. If a condition proposed to detect thermalisation is not satisfied, then one might 
 (for example) discard a certain fraction of the total data set and check the condition again; the process can be reiterated until the condition is satisfied. The precise
@@ -43,6 +47,7 @@ implementation of a thermalisation condition for this program is described below
 
 
 ------ Bootstrapping with binning -------
+
 Bias elimination is the process by which bias is removed (or minimised) for some computed quantity or observable such as the mean or standared deviation of a data set; bias
 elimination is necessary within Monte Carlo simulations (such as the Metropolis algorithm) as it ensures that the expected value of a given statistical quantity is close to 
 its true value, and is hence a more accurate representation of the data set. One example of such a bias elimination tool is "bootstrapping" with binned data. 
@@ -61,6 +66,7 @@ The complete program is the file 'BiasFreeMean.c', and is comprised of four stag
 modification and to make the program modular; these four files should be executed in sequential order to replicate the complete program. The four stages are as follows:
 
 1) ('Gaussian.c') 
+
 Employs the Metropolis algorithm to generate a data set corresponding to random samples of a target Gaussian distribution. The parameters alpha and beta control the generator 
 of candidate samples y, and the proportional distribution P, respectively; suggested ranges for these parameters are provided in comments. The user is requested to provide the 
 number of Metropolis algorithm iterations ("sweeps") and the number of data points to discard (see step 3 below for details). By default the output data is written to a file 
@@ -68,12 +74,14 @@ named 'xnData.dat'. An acceptance ratio is returned to the user, and should idea
 above). 
 
 2) (DivideData.c) 
+
 Simply imports the output data contained within 'xnData.dat' and divides it into two subsets of equal size, exporting each subset to its own .dat file; by default these files
 are named 'HalfSample1.dat' and 'HalfSample2.dat' (the program handles an odd number of data samples by appending the additional point to the second of these files). The sole
 purpose of this stage is to prepare the data for a thermalisation check based on the two data subsets, but this could easily be modified if the user wanted to impose a
 thermalisation condition based on three or more subsets instead.
 
-3) (Thermalisation.c) 
+3) (Thermalisation.c)
+ 
 Separately imports the two data subsets from 'HalfSample1.dat' and 'HalfSample2.dat', and computes their thermalisation statistics (mean, variance, standard deviation). The
 complete data set is considered to be thermalised if both mean values lie within the range given by the other mean +/- its standard deviation. Explicitly:
 
