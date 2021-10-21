@@ -93,6 +93,7 @@ If the condition is requested and fails then the program terminates, and the use
 total sweeps is typically sufficient to ensure thermalisation). 
 
 4) (Binning.c)
+
 The separate program 'binning.c' can be executed immediately after running 'Gaussian.c' (skipping the thermalisation checks) if required. This is also true for the complete
 program 'BiasFreeMean.c' if the user inputs 'n' when prompted, though in both cases no thermalisation statistics will be computed / displayed.
  
