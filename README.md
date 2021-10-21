@@ -3,7 +3,7 @@ Implements the Metropolis algorithm to generate a Markov chain data set which co
 bootstrapping with binning is used to compute the bias-free mean of the data set.
 
 A brief descriptive overview of the computational and statistical methods used within the program is presented below in (1), and then a guide on how to actually use the 
-program is provided in (2).
+program is provided in (2). Code is based on a computational physics project from my undergraduate degree.
 
 -------------------------------- (1) --------------------------------
 
