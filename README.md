@@ -89,7 +89,7 @@ thermalised if( mean1 - stand_dev1 <= mean2 <= mean1 + stand_dev1  &&  mean2 - s
 
 Note that, strictly speaking, the acceptance value returned by 'Gaussian.c' should only be computed after the data has been confirmed as thermalised. The complete program
 'BiasFreeMean.c' instead gives the user the option to verify and impose the thermalisation condition, after a number of samples have already been discarded by an earlier prompt. 
-If the condition is requested and fails then the program terminates, and the user should consider discarding more samples when prompted (dicarding approximately 10% of the 
+If the condition is requested and fails then the program terminates, and the user should consider discarding more samples when prompted (discarding approximately 10% of the 
 total sweeps is typically sufficient to ensure thermalisation). 
 
 4) (Binning.c)
